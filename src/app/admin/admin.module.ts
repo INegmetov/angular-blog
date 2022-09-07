@@ -10,6 +10,7 @@ import { CreatePageComponent } from './create-page/create-page.component';
 import { EditPageComponent } from './edit-page/edit-page.component';
 import { AuthService } from './shared/services/auth.service';
 import { SharedModule } from '../shared/shared.module';
+import { Authguard } from './shared/services/auth.guard';
 
 
 
@@ -31,14 +32,14 @@ import { SharedModule } from '../shared/shared.module';
         path: '', component: AdminLayoutComponent, children: [
           {path: '', redirectTo: '/admin/login', pathMatch: 'full'},
           {path: 'login', component: LoginPageComponent},
-          {path: 'dashboard', component: DashboardPageComponent},
-          {path: 'create', component: CreatePageComponent},
-          {path: 'post/:id/edit', component: EditPageComponent},
+          {path: 'dashboard', component: DashboardPageComponent, canActivate:[Authguard]},
+          {path: 'create', component: CreatePageComponent, canActivate:[Authguard]},
+          {path: 'post/:id/edit', component: EditPageComponent, canActivate:[Authguard]},
         ]
       }
     ])
   ],
   exports:[[RouterModule]],
-  providers: [AuthService]
+  providers: [AuthService, Authguard]
 })
 export class AdminModule { }

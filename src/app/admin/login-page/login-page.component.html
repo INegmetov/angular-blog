@@ -1,6 +1,14 @@
 <form class="card" [formGroup]="form" (ngSubmit)="submit()">
     <h2>Input to admin panel</h2>
 
+    <div class="alert alert-danger" *ngIf="authService.error$ | async as error">
+        {{error}}
+    </div>
+
+    <div class="alert alert-info" *ngIf="message">
+        {{message}}
+    </div>
+
     <div 
         class="form-control"
         [ngClass]="{invalid: form.get('email')!.touched && form.get('email')!.invalid}">
@@ -9,8 +17,8 @@
         <div 
         *ngIf="form.get('email')!.touched && form.get('email')!.invalid"
         class="validation" >
-            <small *ngIf="form.get('email')?.errors?.['required']">Заполните поле email</small>
-            <small *ngIf="form.get('email')?.errors?.['email']">Поле email должно быть abc@abc </small>
+            <small *ngIf="form.get('email').errors['required']">Заполните поле email</small>
+            <small *ngIf="form.get('email').errors['email']">Поле email должно быть abc@abc </small>
         </div>
     </div>
 
@@ -24,10 +32,10 @@
         class="validation"
         *ngIf="form.get('password')!.touched && form.get('password')!.invalid"
         >
-            <small *ngIf="form.get('password')?.errors?.['required']">Введите пароль</small>
-            <small *ngIf="form.get('password')?.errors?.['minlength']">
-                Длинна должна быть не менее {{form.get('password')?.errors?.['minlength']['requiredLength']}}.
-                Сейчас количество символов {{form.get('password')?.errors?.['minlength']['actualLength']}}
+            <small *ngIf="form.get('password')?.errors['required']">Введите пароль</small>
+            <small *ngIf="form.get('password')?.errors['minlength']">
+                Длинна должна быть не менее {{form.get('password').errors['minlength']['requiredLength']}}.
+                Сейчас количество символов {{form.get('password').errors['minlength']['actualLength']}}
             </small>
         </div>
     </div>
